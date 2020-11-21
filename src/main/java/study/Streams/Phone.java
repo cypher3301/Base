@@ -10,10 +10,15 @@ public class Phone {
         this.price = price;
     }
 
-    public Phone(String name, String company,int price) {
+    public Phone(String name, String company, int price) {
         this.name = name;
         this.price = price;
         this.company = company;
+    }
+
+    public static int compare(Phone one, Phone two) {
+        if (one.getPrice() > two.getPrice()) return 1;
+        return -1;
     }
 
     public String getName() {
@@ -38,5 +43,12 @@ public class Phone {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name +
+                ", Price: " + price +
+                (company == null ? "" : (", Company: " + company));
     }
 }

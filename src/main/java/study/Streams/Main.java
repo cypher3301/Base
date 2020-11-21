@@ -5,65 +5,64 @@ import java.util.stream.*;
 
 public class Main {
     public static void main(String[] args) {
-        new Main().conversionOperations();
+        new Main().reduce();
     }
 
     private void run() {
-        int[] array = new int[]{1,2,3,45,5};
+        int[] array = new int[]{1, 2, 3, 45, 5};
         IntStream integerStream = Arrays.stream(array);
         List<Integer> list = new ArrayList<>();
-        long count = IntStream.of(-5,3,2,56,7,3).filter(w->w>0).count();
+        long count = IntStream.of(-5, 3, 2, 56, 7, 3).filter(w -> w > 0).count();
     }
 
-    private void run2(){
+    private void run2() {
         ArrayList<String> cities = new ArrayList<>();
-        Collections.addAll(cities,"asdf","asdfasdf", "asdfasdf");
-        cities.stream().filter(s -> s.length()>=6).forEach(System.out::println);
+        Collections.addAll(cities, "asdf", "asdfasdf", "asdfasdf");
+        cities.stream().filter(s -> s.length() >= 6).forEach(System.out::println);
 
-        Stream<String> stream = Arrays.stream(new String[]{"asdf","asdfasdf", "asdfasdf"});
+        Stream<String> stream = Arrays.stream(new String[]{"asdf", "asdfasdf", "asdfasdf"});
         stream.forEach(System.out::println);
 
-        IntStream intStream = Arrays.stream(new int[]{1,2,3,4,56});
-        LongStream longStream = Arrays.stream(new long[]{1,2,34,5});
-        DoubleStream doubleStream = Arrays.stream(new double[]{1,2,3,5,6});
+        IntStream intStream = Arrays.stream(new int[]{1, 2, 3, 4, 56});
+        LongStream longStream = Arrays.stream(new long[]{1, 2, 34, 5});
+        DoubleStream doubleStream = Arrays.stream(new double[]{1, 2, 3, 5, 6});
 
-        Stream<String> stringStream = Stream.of("asdf","asdfasdf", "asdfasdf");
+        Stream<String> stringStream = Stream.of("asdf", "asdfasdf", "asdfasdf");
         stringStream.forEach(s -> {
-            if(s.length()>=4) {
+            if (s.length() >= 4) {
                 System.out.println(s);
-            }
-            else {
+            } else {
                 s.concat(" City");
                 System.out.println(s);
             }
         });
 
-        String[] strings = {"asdfasdfasdfa","dsfagerfev","aefqewrf"};
+        String[] strings = {"asdfasdfasdfa", "dsfagerfev", "aefqewrf"};
         Stream<String> stringStream1 = Stream.of(strings);
 
 
-        IntStream intStream1 = IntStream.of(new int[]{1,2,3,54,5});
-        IntStream intStream3 = IntStream.of(new int[]{1,2,3,54,5});
-        IntStream[] intStream2 = {intStream1,intStream3};
+        IntStream intStream1 = IntStream.of(new int[]{1, 2, 3, 54, 5});
+        IntStream intStream3 = IntStream.of(new int[]{1, 2, 3, 54, 5});
+        IntStream[] intStream2 = {intStream1, intStream3};
         Stream stream1 = Stream.of(intStream2);
         stream1.forEach(System.out::println);
-        intStream3.forEach(i->Math.sin(Math.pow(i,2)));
+        intStream3.forEach(i -> Math.sin(Math.pow(i, 2)));
 //        intStream3.toArray();
 
     }
 
-    void run3(){
-        Stream<String> stringStream = Stream.of("Париж", "Лондон", "Мадрид","Берлин", "Брюссель");
+    void run3() {
+        Stream<String> stringStream = Stream.of("Париж", "Лондон", "Мадрид", "Берлин", "Брюссель");
         stringStream.forEach(s -> System.out.println("г. " + s + " :"));
 
-        Stream<String> stream = Stream.of("Париж", "Лондон", "Мадрид","Берлин", "Брюссель");
-        stream.filter(s -> s.length()>=6).filter(s -> s.toLowerCase().contains("и")).forEach(System.out::println);
+        Stream<String> stream = Stream.of("Париж", "Лондон", "Мадрид", "Берлин", "Брюссель");
+        stream.filter(s -> s.length() >= 6).filter(s -> s.toLowerCase().contains("и")).forEach(System.out::println);
 
         Stream<Phone> phoneStream = Stream.of(
                 new Phone("iphone 6s", 54000),
                 new Phone("lumia 940", 45000),
                 new Phone("Sumsung Galaxy s 6", 40000));
-        phoneStream.filter(phone -> phone.getPrice()<50000).forEach(phone -> System.out.println(phone.getName()));
+        phoneStream.filter(phone -> phone.getPrice() < 50000).forEach(phone -> System.out.println(phone.getName()));
 
         Stream<Phone> phoneStream2 = Stream.of(
                 new Phone("iphone 6s", 54000),
@@ -74,7 +73,7 @@ public class Main {
                 new Phone("iphone 6s", 54000),
                 new Phone("lumia 940", 45000),
                 new Phone("Sumsung Galaxy s 6", 40000));
-        phoneStream3.map(phone -> "name: " + phone.getName()+" price: " + phone.getPrice()).forEach(System.out::println);
+        phoneStream3.map(phone -> "name: " + phone.getName() + " price: " + phone.getPrice()).forEach(System.out::println);
 //        List<String> strings = phoneStream3.map(phone -> "name: " + phone.getName() + " price: " + phone.getPrice()).collect(Collectors.toList());
 
 
@@ -84,33 +83,33 @@ public class Main {
                 new Phone("lumia 940", 45000),
                 new Phone("Sumsung Galaxy s 6", 40000));
         phoneStream4.flatMap(phone -> Stream.of(
-                String.format("Name: %s price without discount: %d", phone.getName(),phone.getPrice()),
-                String.format("Name: %s price with discount: %d", phone.getName(),phone.getPrice()-(int)(phone.getPrice()*0.1)))
+                String.format("Name: %s price without discount: %d", phone.getName(), phone.getPrice()),
+                String.format("Name: %s price with discount: %d", phone.getName(), phone.getPrice() - (int) (phone.getPrice() * 0.1)))
         ).forEach(System.out::println);
 
     }
 
-    void run4(){
+    void run4() {
         List<String> phones = new ArrayList<String>();
-        Collections.addAll(phones,"iPhone X", "Nokia 9", "Huawei Nexus 6P",
+        Collections.addAll(phones, "iPhone X", "Nokia 9", "Huawei Nexus 6P",
                 "Samsung Galaxy S8", "LG G6", "Xiaomi MI6",
                 "ASUS Zenfone 3", "Sony Xperia Z5", "Meizu Pro 6",
                 "Pixel 2");
-        phones.stream().filter(p->p.length()<12).sorted().forEach(System.out::println);
+        phones.stream().filter(p -> p.length() < 12).sorted().forEach(System.out::println);
 
         Stream<Phone> phoneStream = Stream.of(new Phone("iPhone X", "Apple", 600),
                 new Phone("Pixel 2", "Google", 500),
-                new Phone("iPhone 8", "Apple",450),
-                new Phone("Nokia 9", "HMD Global",150),
+                new Phone("iPhone 8", "Apple", 450),
+                new Phone("Nokia 9", "HMD Global", 150),
                 new Phone("Galaxy S9", "Samsung", 300));
 
         phoneStream.sorted(new PhoneComaparator())
-                .forEach(p->System.out.printf("%s (%s) - %d \n", p.getName(),p.getCompany(), p.getPrice()));
+                .forEach(p -> System.out.printf("%s (%s) - %d \n", p.getName(), p.getCompany(), p.getPrice()));
 
 
     }
 
-    void substream_cancatStreams(){
+    void substream_cancatStreams() {
 //        Stream<Integer> numbers = Stream.of(-1,-2,-4,-1,5,4,0);
 //        numbers.takeWhile(n->n<0).forEach(System.out::println);
 //        Stream<Integer> integerStream2 = Stream.of(-1,-2,-4,-1,5,4,0);
@@ -137,15 +136,15 @@ public class Main {
                 "Lenovo S 850"));
         int pageSize = 3;
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             System.out.println("Enter page number: ");
             int page = scanner.nextInt();
-            if (page<1) break;
-            strings.stream().skip((long) (page - 1) *pageSize).limit(pageSize).forEach(System.out::println);
+            if (page < 1) break;
+            strings.stream().skip((long) (page - 1) * pageSize).limit(pageSize).forEach(System.out::println);
         }
     }
 
-    void conversionOperations(){
+    void conversionOperations() {
         //count
         ArrayList<String> names = new ArrayList<String>(Arrays.asList("Tom", "Sam", "Bob", "Alice"));
         System.out.println(names.stream().count());
@@ -160,15 +159,50 @@ public class Main {
 
         //allMatch, anyMatch, noneMatch
         ArrayList<String> strings = new ArrayList<>(Arrays.asList("Tom", "Sam", "Bob", "Alice"));
-        System.out.println(strings.stream().allMatch(n->n.length()>=3));
-        System.out.println(strings.stream().anyMatch(n->n.length()==3));
-        System.out.println(strings.stream().noneMatch(n->n.equals("Tom")));
+        System.out.println(strings.stream().allMatch(n -> n.length() >= 3));
+        System.out.println(strings.stream().anyMatch(n -> n.length() == 3));
+        System.out.println(strings.stream().noneMatch(n -> n.equals("Tom")));
 
         //min и max
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1,2,4,5,6,8,9,9,0));
-        System.out.println(arrayList.stream().min(Integer::compare));
-        System.out.println(arrayList.stream().max(Integer::compare));
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 2, 4, 5, 6, 8, 9, 9, 0));
+        System.out.println(arrayList.stream().min(Integer::compare).get());
+        System.out.println(arrayList.stream().max(Integer::compare).get());
 
+        ArrayList<Phone> phones = new ArrayList<>(Arrays.asList(
+                new Phone("iPhone 8", 52000),
+                new Phone("Nokia 9", 35000),
+                new Phone("Samsung Galaxy S9", 48000),
+                new Phone("HTC U12", 36000)));
+        System.out.println(phones.stream().min(Phone::compare).get().toString());
+        System.out.println(phones.stream().max(Phone::compare).get().toString());
+
+    }
+
+    void reduce() {
+        Stream<Integer> integerStream = Stream.of(1, 2, 4, 5, 6, 7);
+        Optional<Integer> res = integerStream.reduce((x, y) -> x * y);
+        System.out.println(res.get());
+
+        Stream<String> stringStream = Stream.of("мама", "мыла", "раму");
+        Optional<String> optionalS = stringStream.reduce((x, y) -> x + " " + y);
+        System.out.println(optionalS.get());
+
+        Stream<Integer> integerStream1 = Stream.of(1, 2, 4, 5, 6, 7, 8, 9);
+        int identity = 5;
+        int result = integerStream1.reduce(identity, (x, y) -> x * y);
+        System.out.println(result);
+
+        Stream<Phone> phoneStream = Stream.of(new Phone("iPhone 6 S", 54000),
+                new Phone("Lumia 950", 45000),
+                new Phone("Samsung Galaxy S 6", 40000),
+                new Phone("LG G 4", 32000));
+        int sum = phoneStream.reduce(0, (x, y) -> {
+            if (y.getPrice() < 50000)
+                return x + y.getPrice();
+            else
+                return x;
+        }, Integer::sum);
+        System.out.println(sum);
     }
 
 }
