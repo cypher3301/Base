@@ -5,7 +5,7 @@ import java.util.stream.*;
 
 public class Main {
     public static void main(String[] args) {
-        new Main().reduce();
+        new Main().groiping();
     }
 
     private void run() {
@@ -203,6 +203,113 @@ public class Main {
                 return x;
         }, Integer::sum);
         System.out.println(sum);
+    }
+
+    void optional(){
+        //Тип Optional
+        //Ряд операций сведения, такие как min, max, reduce, возвращают объект Optional<T>. Этот объект фактически обертывает результат операции. После выполнения операции с помощью метода get() объекта Optional мы можем получить его значение:
+        ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(5, 4, 3, 4, 5, 6, 7, 7, 8, 9, 9));
+        Optional<Integer> min = integers.stream().min(Integer::compare);//
+        Optional<Integer> min2 = integers.stream().min(Comparator.comparingInt(x -> x));
+        Optional<Integer> min3 = integers.stream().min((x,y)->Integer.compare(x,y));
+        System.out.println(min.get());
+        System.out.println(min2.get());
+        System.out.println(min3.get());
+
+        //orElse
+        //Метод orElse() позволяет определить альтернативное значение, которое будет возвращаться, если Optional не получит из потока какого-нибудь значения:
+        ArrayList<Integer> integers1 = new ArrayList<>();
+        Optional<Integer> minn = integers1.stream().min(Integer::compare);
+        if (minn.isPresent()){
+            System.out.println(minn.get());
+        }
+        ArrayList<Integer> integers12 = new ArrayList<>();
+        Optional<Integer> minn2 = integers12.stream().min(Integer::compare);
+        System.out.println(minn2.orElse(-1));
+        System.out.println(integers.stream().min(Integer::compare).orElse(-1));
+
+        //orElseGet
+        //Метод orElseGet() позволяет задать функцию, которая будет возвращать значение по умолчанию:
+        ArrayList<Integer> nums = new ArrayList<>();
+        Optional<Integer> min5 = nums.stream().min(Integer::compare);
+        Random random = new Random();
+        System.out.println(min.orElseGet(()->random.nextInt(100)));
+
+        //orElseThrow
+        //Еще один метод - orElseThrow позволяет сгенерировать исключение, если Optional не содержит значения:
+        ArrayList<Integer> numbers = new ArrayList<>();
+        Optional<Integer> min6 = numbers.stream().min(Integer::compare);
+        try {
+            System.out.println(min6.orElseThrow(IllegalStateException::new));
+        }catch (IllegalStateException e){
+            System.out.println(e);
+        }
+
+        //Обработка полученного значения
+        //Метод ifPresent() определяет действия со значением в Optional, если значение имеется:
+        ArrayList<Integer> integers2 = new ArrayList<>(Arrays.asList(4,5,6,67,78,8));
+        Optional<Integer> optional = integers2.stream().findAny();
+        optional.ifPresent(System.out::println);
+
+        //Метод ifPresentOrElse() позволяет определить альтернативную логику на случай, если значение в Optional отсутствует:
+        ArrayList<Integer> integers3 = new ArrayList<>();
+        Optional<Integer> optional1 = integers3.stream().min(Integer::compare);
+//        optional1.ifPresentOrElse({
+//                v-> System.out.println(v),
+//                ()-> System.out.println("Value not found")
+//        });java 9
+    }
+
+    void collect(){
+        //Метод collect
+        List<String> phones = new ArrayList<>(Arrays.asList("iPhone 8", "HTC U12", "Huawei Nexus 6P",
+                "Samsung Galaxy S9", "LG G6", "Xiaomi MI6", "ASUS Zenfone 2",
+                "Sony Xperia Z5", "Meizu Pro 6", "Lenovo S850"));
+        List<String> filtered = phones.stream().filter(s -> s.length()<10).collect(Collectors.toList());
+        filtered.forEach(System.out::println);
+        for (String s : filtered) {
+            System.out.println(s);
+        }
+        //Использование метода toSet() аналогично.
+        Set<String> strings = phones.stream().filter(s -> s.length()<10).collect(Collectors.toSet());
+        strings.forEach(System.out::println);
+        //Теперь применим метод toMap():
+        Stream<Phone> phoneStream = Stream.of(
+                new Phone("iPhone 8", 54000),
+                new Phone("Nokia 9", 45000),
+                new Phone("Samsung Galaxy S9", 40000),
+                new Phone("LG G6", 32000));
+        Map<String, Integer> phones1 = phoneStream.collect(Collectors.toMap(Phone::getName, Phone::getPrice));
+        phones1.forEach((k,v)-> System.out.println(k+" "+v));
+
+        //Если нам надо создать какой-то определенный тип коллекции, например, HashSet, то мы можем использовать специальные функции, которые определены в классах-коллекций. Например, получим объект HashSet:
+        Stream<String> phones3 = Stream.of(
+                "iPhone 8", "HTC U12", "Huawei Nexus 6P",
+                "Samsung Galaxy S9", "LG G6", "Xiaomi MI6", "ASUS Zenfone 2",
+                "Sony Xperia Z5", "Meizu Pro 6", "Lenovo S850");
+        HashSet<String> stringHashSet = phones3.collect(Collectors.toCollection(HashSet::new));
+        stringHashSet.forEach(System.out::println);
+//        ArrayList<String> stringArrayList = phones3.collect(Collectors.toCollection(ArrayList::new));
+        //Вторая форма метода collect имеет три параметра:
+        Stream<String> stringStream = Stream.of(
+                "iPhone 8", "HTC U12", "Huawei Nexus 6P",
+                "Samsung Galaxy S9", "LG G6", "Xiaomi MI6", "ASUS Zenfone 2",
+                "Sony Xperia Z5", "Meizu Pro 6", "Lenovo S850");
+//        ArrayList<String> arrayList = stringStream.filter(s -> s.length()<12).collect(
+//                ()->new ArrayList<String>(),
+//                (list,item)->list.add(item),
+//                (list1,item2)->list1.addAll(item2));
+        ArrayList<String> arrayList = stringStream.filter(s -> s.length()<12).collect(
+                ArrayList::new,
+                ArrayList::add,
+                ArrayList::addAll);
+        arrayList.forEach(System.out::println);
+
+
+    }
+
+    void groiping(){
+        //Группировка
     }
 
 }
