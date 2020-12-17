@@ -1,4 +1,4 @@
-package Strings.Buffer_Builder;
+package study.strings.Buffer_Builder;
 
 public class Main {
     public static void main(String[] args) {

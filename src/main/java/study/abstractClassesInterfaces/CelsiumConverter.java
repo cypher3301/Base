@@ -1,6 +1,6 @@
-package Abstract_classes_interfaces;
+package study.abstractClassesInterfaces;
 
-public class CelsiumConverter implements Converter{
+public class CelsiumConverter implements Converter {
     @Override
     public double getConvertedValue(double baseValue) {
         return baseValue;

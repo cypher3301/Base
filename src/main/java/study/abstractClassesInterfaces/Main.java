@@ -1,4 +1,4 @@
-package Abstract_classes_interfaces;
+package study.abstractClassesInterfaces;
 
 public class Main {
     public static void main(String[] args) {

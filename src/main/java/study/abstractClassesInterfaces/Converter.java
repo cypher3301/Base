@@ -1,4 +1,4 @@
-package Abstract_classes_interfaces;
+package study.abstractClassesInterfaces;
 
 public interface Converter {
     double getConvertedValue(double baseValue);

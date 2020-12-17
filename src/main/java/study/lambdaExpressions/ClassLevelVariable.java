@@ -1,4 +1,4 @@
-package Lambda_expressions;
+package study.lambdaExpressions;
 
 public class ClassLevelVariable {
     private static int x = 10;

@@ -1,5 +1,7 @@
+package ai.AI;
+
 public interface Neuron {
-    public double[] getInput();
-    public double getItemInput(int index);
-    public double getDisplacmentNeuron();
+    double[] getInput();
+    double getItemInput(int index);
+    double getDisplacmentNeuron();
 }

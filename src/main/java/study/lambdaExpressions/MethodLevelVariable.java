@@ -1,18 +1,18 @@
-package Lambda_expressions;
+package study.lambdaExpressions;
 
 public class MethodLevelVariable {
     public static void main(String[] args) {
         int n = 80;
         int x = 70;
 
-        Opr opr = ()->{
+        Opr opr = () -> {
             //n=199; not correct
-          return n+x;
+            return n + x;
         };
         //n=199;// not correct
     }
 }
 
-interface Opr{
+interface Opr {
     int calc();
 }
