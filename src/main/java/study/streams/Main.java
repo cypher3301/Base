@@ -1,12 +1,11 @@
-package study.streams;
+package study.Streams;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.*;
 
 public class Main {
     public static void main(String[] args) {
-        new Main().parallelArrays();
+        new Main().groiping();
     }
 
     private void run() {
@@ -110,7 +109,7 @@ public class Main {
 
     }
 
-    void subStreamConcatStreams() {
+    void substream_cancatStreams() {
 //        Stream<Integer> numbers = Stream.of(-1,-2,-4,-1,5,4,0);
 //        numbers.takeWhile(n->n<0).forEach(System.out::println);
 //        Stream<Integer> integerStream2 = Stream.of(-1,-2,-4,-1,5,4,0);
@@ -309,194 +308,8 @@ public class Main {
 
     }
 
-    void grouping(){
+    void groiping(){
         //Группировка
-        //Чтобы сгруппировать данные по какому-нибудь признаку, нам надо использовать в связке метод collect() объекта Stream и метод Collectors.groupingBy(). Допустим, у нас есть следующий класс:
-        Stream<Phone> phoneStream = Stream.of(
-                new Phone("iPhone X", "Apple", 600),
-                new Phone("Pixel 2", "Google", 500),
-                new Phone("iPhone 8", "Apple",450),
-                new Phone("Galaxy S9", "Samsung", 440),
-                new Phone("Galaxy S8", "Samsung", 340));
-        Map<String, List<Phone>> stringListMap = phoneStream.collect(Collectors.groupingBy(Phone::getCompany));
-        for (Map.Entry<String,List<Phone>> item : stringListMap.entrySet()){
-            System.out.println(item.getKey());
-            for (Phone phone : item.getValue()){
-                System.out.println(phone.getName());
-            }
-        }
-        System.out.println("\n");
-
-        //Метод Collectors.partitioningBy
-        //Метод Collectors.partitioningBy() имеет похожее действие, только он делит элементы на группы по принципу, соответствует ли элемент определенному условию. Например:
-        Stream<Phone> stream = getStream(new Phone("iPhone X", "Apple", 600),
-                new Phone("Pixel 2", "Google", 500),
-                new Phone("iPhone 8", "Apple", 450),
-                new Phone("Galaxy S9", "Samsung", 440),
-                new Phone("Galaxy S8", "Samsung", 340));
-        Map<Boolean, List<Phone>> booleanListMap = stream.collect(Collectors.partitioningBy(phone -> phone.getCompany().equals("Apple")));
-        for (Map.Entry<Boolean,List<Phone>> item : booleanListMap.entrySet()){
-            System.out.println(item.getKey());
-            for (Phone phone:item.getValue()){
-                System.out.println(phone);
-            }
-        }
-        System.out.println("\n");
-
-        //Метод Coollectors.counting
-        //Метод Collectors.counting применяется в Collectors.groupingBy() для вычисления количества элементов в каждой группе:
-        Stream<Phone> stream1 = dataToStream();
-        Map<String, Long> phonesByCompany = stream1.collect(Collectors.groupingBy(Phone::getCompany,Collectors.counting()));
-        for (Map.Entry<String, Long> item : phonesByCompany.entrySet()){
-            System.out.println(item.getKey()+" - " + item.getValue());
-        }
-        System.out.println();
-
-        //Метод Collectors.summing
-        //Метод Collectors.summing применяется для подсчета суммы. В зависимости от типа данных, к которым применяется метод, он имеет следующие формы: summingInt(), summingLong(), summingDouble(). Применим этот метод для подсчета стоимости всех смартфонов по компаниям
-        Map<String,Integer> stringIntegerMap = dataToStream().collect(Collectors.groupingBy(Phone::getCompany,Collectors.summingInt(Phone::getPrice)));
-        showData(stringIntegerMap);
-
-        //Методы maxBy и minBy
-        Map<String, Optional<Phone>> stringOptionalMap = dataToStream().collect(Collectors.groupingBy(Phone::getCompany,Collectors.minBy(Comparator.comparing(Phone::getPrice))));
-        for(Map.Entry<String, Optional<Phone>> item: stringOptionalMap.entrySet()){
-            System.out.println(item.getKey()+" - " + item.getValue().get().getName());
-        }
-        System.out.println();
-
-        //Метод summarizing
-        //Методы summarizingInt() / summarizingLong() / summarizingDouble() позволяют объединить в набор значения соответствующих типов:
-        Map<String, IntSummaryStatistics> priceSummary=dataToStream().collect(Collectors.groupingBy(Phone::getCompany, Collectors.summarizingInt((Phone::getPrice))));
-        for (Map.Entry<String, IntSummaryStatistics> item : priceSummary.entrySet()){
-            System.out.println(item.getKey() + " - " + item.getValue().getSum());
-        }
-        //Метод Collectors.summarizingInt(Phone::getPrice)) создает набор, в который помещаются цены для всех телефонов каждой из групп. Данный набор инкапсулируется в объекте IntSummaryStatistics. Соответственно если бы мы применяли методы summarizingLong() или summarizingDouble(), то соответственно бы получали объекты LongSummaryStatistics или DoubleSummaryStatistics.
-        //У этих объектов есть ряд методов, который позволяют выполнить различные атомарные операции над набором:
-        //getAverage(): возвращает среднее значение
-        //getCount(): возвращает количество элементов в наборе
-        //getMax(): возвращает максимальное значение
-        //getMin(): возвращает минимальное значение
-        //getSum(): возвращает сумму элементов
-        //accept(): добавляет в набор новый элемент
-        System.out.println();
-
-        //Метод mapping
-        //Метод mapping позволяет дополнительно обработать данные и задать функцию отображения объектов из потока на какой-нибудь другой тип данных. Например:
-        Map<String, List<String>> stringListMap1 = dataToStream().collect(Collectors.groupingBy(Phone::getCompany,Collectors.mapping(Phone::getName, Collectors.toList())));
-        for (Map.Entry<String, List<String>> item : stringListMap1.entrySet()){
-            System.out.println(item.getKey());
-            Stream.of(item).forEach(i-> System.out.println(i.getValue()));
-        }
-        System.out.println();
-    }
-
-    void parallelStreams(){
-        //Параллельные потоки
-        //Чтобы сделать обычный последовательный поток параллельным, надо вызвать у объекта Stream метод parallel. Кроме того, можно также использовать метод parallelStream() интерфейса Collection для создания параллельного потока из коллекции.
-        Stream<Integer> stream = Stream.of(1,2,3,4,5,6,7,8,9);
-        Optional<Integer> res = stream.parallel().reduce((x,y)->x*y);
-        System.out.println(res.get());
-        //Однако не все функции можно без ущерба для точности вычисления перенести с последовательных потоков на параллельные. Прежде всего такие функции должны быть без сохранения состояния и ассоциативными, то есть при выполнении слева направо давать тот же результат, что и при выполнении справа налево, как в случае с произведением чисел. Например:
-        Stream<String> wordsStream = Stream.of("мама", "мыла", "раму");
-        String sentence = wordsStream.parallel().reduce("Result:", (x,y)->x+" "+y);
-        System.out.println(sentence);
-        //Данный вывод не является правильным. Если же мы не уверены, что на каком-то этапе работы с параллельным потоком он адекватно сможет выполнить какую-нибудь операцию, то мы можем преобразовать этот поток в последовательный посредством вызова метода sequential():
-        Stream<String> stringStream = Stream.of("мама", "мыла", "раму", "hello world");
-        String s = stringStream.parallel().filter(s1 -> s1.length()<10).sequential().reduce("Result:", (x,y)->x+" "+y);
-        System.out.println(s);
-        Stream<Integer> integerStream = Stream.of(1,2,4,5,6,7);
-        Integer result = integerStream.parallel().reduce(1,(x,y)->x*y);
-        System.out.println(result);
-        /*
-        Вопросы производительности в параллельных операциях
-        Фактически применение параллельных потоков сводится к тому, что данные в потоке будут разделены на части, каждая часть обрабатывается на отдельном ядре процессора, и в конце эти части соединяются, и над ними выполняются финальные операции. Рассмотрим некоторые критерии, которые могут повлиять на производительность в параллельных потоках:
-        Размер данных. Чем больше данных, тем сложнее сначала разделять данные, а потом их соединять.
-        Количество ядер процессора. Теоретически, чем больше ядер в компьютере, тем быстрее программа будет работать. Если на машине одно ядро, нет смысла применять параллельные потоки.
-        Чем проще структура данных, с которой работает поток, тем быстрее будут происходить операции. Например, данные из ArrayList легко использовать, так как структура данной коллекции предполагает последовательность несвязанных данных. А вот коллекция типа LinkedList - не лучший вариант, так как в последовательном списке все элементы связаны с предыдущими/последующими. И такие данные трудно распараллелить.
-        Над данными примитивных типов операции будут производиться быстрее, чем над объектами классов
-        */
-        /*
-        Упорядоченность в параллельных потоках
-        Как правило, элементы передаются в поток в том же порядке, в котором они определены в источнике данных. При работе с параллельными потоками система сохраняет порядок следования элементов. Исключение составляет метод forEach(), который может выводить элементы в произвольном порядке. И чтобы сохранить порядок следования, необходимо применять метод forEachOrdered:
-        */
-        Stream<Phone> phoneStream= dataToStream();
-        phoneStream.parallel().sorted(new PhoneComaparator()).forEachOrdered(System.out::println);
-        /*Сохранение порядка в параллельных потоках увеличивает издержки при выполнении. Но если нам порядок не важен, то мы можем отключить его сохранение и тем самым увеличить производительность, использовав метод unordered:*/
-        Stream<Phone> phoneStream2= dataToStream();
-        phoneStream2.parallel().sorted(new PhoneComaparator()).unordered().forEach(System.out::println);
-    }
-
-    void parallelArrays(){
-        //Параллельные операции над массивами
-        //В JDK 8 к классу Arrays было добавлено ряд методов, которые позволяют в параллельном режиме совершать обработку элементов массива. И хотя данные методы формально не входят в Stream API, но реализуют схожую функциональность, что и параллельные потоки:
-        //parallelPrefix(): вычисляет некоторое значение для элементов массива (например, сумму элементов)
-        //parallelSetAll(): устанавливает элементы массива с помощью лямбда-выражения
-        //parallelSort(): сортирует массив
-        //Используем метод parallelSetAll() для установки элементов массива:
-        int[] ints = initializeArray(6);
-        for (int i : ints) {
-            System.out.println(i);
-        }
-        Arrays.stream(ints).forEach(System.out::println);
-        //Рассмотрим более сложный пример.
-        Phone[] phones = new Phone[]{new Phone("iPhone 8", 54000),
-                new Phone("Pixel 2", 45000),
-                new Phone("Samsung Galaxy S9", 40000),
-                new Phone("Nokia 9", 32000)};
-        Arrays.parallelSetAll(phones, i->{
-            phones[i].setPrice(phones[i].getPrice()-10000);
-            return phones[i];
-        });
-        for (Phone phone : phones) {
-            System.out.printf("%s - %d \n", phone.getName(),phone.getPrice());
-        }
-
-        //Сортировка
-        int[] nums = {1,3,5,78,90,5,3,6,8,9,45,4};
-        Arrays.parallelSort(nums);
-        for (int num : nums) {
-            System.out.println(num);
-        }
-        Arrays.parallelSort(phones, new PhoneComaparator());
-        for (Phone phone : phones) {
-            System.out.println(phone.getName());
-        }
-
-        //Метод parallelPrefix
-        //Метод parallelPrefix() походит для тех случаев, когда надо получить элемент массива или объект того же типа, что и элементы массива, который обладает некоторыми признаками. Например, в массиве чисел это может быть максимальное, минимальное значения и т.д. Например, найдем произведение чисел:
-        Arrays.parallelPrefix(nums,(x,y)->x*y);
-        for (int num : nums) {
-            System.out.println(num);
-        }
-        //То есть, как мы видим из консольного вывода, лямбда-выражение из Arrays.parallelPrefix, которое представляет бинарную функцию, получает два элемента и выполняет над ними операцию. Результат операции сохраняется и передается в следующий вызов бинарной функции.
-    }
-
-    public static int[] initializeArray(int size){
-        int[] values = new int[size];
-        Arrays.parallelSetAll(values,i->i*10);
-        return values;
-    }
-
-
-    private static <T,J> void showData(Map<T, J> phonesByCompany){
-        for (Map.Entry<T, J> item : phonesByCompany.entrySet()){
-            System.out.println(item.getKey()+" - " + item.getValue());
-        }
-        System.out.println();
-    }
-
-    private static Stream<Phone> dataToStream(){
-        return getStream(new Phone("iPhone X", "Apple", 600),
-                new Phone("Pixel 2", "Google", 500),
-                new Phone("iPhone 8", "Apple", 450),
-                new Phone("Galaxy S9", "Samsung", 440),
-                new Phone("Galaxy S8", "Samsung", 340));
-    }
-
-    //from help package
-    @SafeVarargs
-    private static  <T> Stream<T> getStream(T... vals){
-        return Stream.of(vals);
     }
 
 }
