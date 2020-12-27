@@ -1,4 +1,4 @@
-package study.streams;
+package study.Streams;
 
 public class Phone {
     private String name;
