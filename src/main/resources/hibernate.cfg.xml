@@ -32,11 +32,14 @@
 
         <mapping class="study.hibernate.data.HibernateDevelopersEntity"/>
         <mapping resource="HibernateDevelopersEntity.hbm.xml"/>
-<!--        <mapping class="study.hibernate.data.HibernateCompaniesEntity"/>-->
+        <mapping class="study.hibernate.data.HibernateDevsEntity"/>
+        <!--        <mapping class="study.hibernate.data.HibernateCompaniesEntity"/>-->
 <!--        <mapping resource="HibernateCompaniesEntity.hbm.xml"/>-->
 
         <!--        <mapping class="study.db.book.Abonent"/>-->
 <!--        <mapping resource="user.cfg.xml"/>-->
+
+        <mapping class="study.hibernate.data.HibernateDevsEntity"/>
 
 
     </session-factory>
