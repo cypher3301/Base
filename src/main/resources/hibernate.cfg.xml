@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mariadb://localhost:3306/simplenn_test</property>
+
+        <!--        <property name="connection.pool_size">1</property>-->
+<!--        <property name="hibernate.show_sql">true</property>-->
+<!--        <property name="connection.autocommit">true</property>-->
+
+
+<!--        <property name="hibernate.current_session_context_class">thread</property>-->
+        <!-- DB schema will be updated if needed -->
+<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
+
+
+<!--        <mapping class="study.hibernate.data.EmployEntity"/>-->
+<!--        <mapping resource="EmployEntity.hbm.xml"/>-->
+
+<!--        <mapping class="study.hibernate.data.EmploysEntity"/>-->
+<!--        <mapping resource="EmploysEntity.hbm.xml"/>-->
+
+<!--        <mapping class="study.hibernate.data.TestEntity"/>-->
+<!--        <mapping resource="TestEntity.hbm.xml"/>-->
+
+<!--        <mapping class="study.hibernate.data.TestphonesEntity"/>-->
+<!--        <mapping resource="TestphonesEntity.hbm.xml"/>-->
+
+        <mapping class="study.hibernate.data.HibernateDevelopersEntity"/>
+        <mapping resource="HibernateDevelopersEntity.hbm.xml"/>
+<!--        <mapping class="study.hibernate.data.HibernateCompaniesEntity"/>-->
+<!--        <mapping resource="HibernateCompaniesEntity.hbm.xml"/>-->
+
+        <!--        <mapping class="study.db.book.Abonent"/>-->
+<!--        <mapping resource="user.cfg.xml"/>-->
+
+
+    </session-factory>
+</hibernate-configuration>
