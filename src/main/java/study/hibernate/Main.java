@@ -5,8 +5,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.query.Query;
+import study.hibernate.data.HibernateDevelopersEntity;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class Main {
@@ -24,9 +28,13 @@ public class Main {
             3)criteria
     * */
     public static void main(String[] args) {
-        sessionFactory = new Configuration().buildSessionFactory();
-//        Session session =sessionFactory.openSession();
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+        new Main().run();
 
+    }
+
+    public void run(){
+        criteria();
     }
 
     private void transaction(){
@@ -83,5 +91,14 @@ public class Main {
         List developers7 = query7.list();
 
 
+    }
+
+    private void criteria(){
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        Root<HibernateDevelopersEntity> root = criteriaBuilder.createQuery(HibernateDevelopersEntity.class).from(HibernateDevelopersEntity.class);
+        CriteriaBuilder.In<String> in = criteriaBuilder.in(root.get("experience"));
+        System.out.println(in.value("experience"));
+        System.out.println();
     }
 }
