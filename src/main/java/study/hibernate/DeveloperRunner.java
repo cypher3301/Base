@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.loader.custom.sql.SQLQueryParser;
+import org.hibernate.query.NativeQuery;
 import study.hibernate.data.HibernateDevelopersEntity;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class DeveloperRunner {
          */
         List developers = developerRunner.listDevelopers();
         for (Object developer : developers) {
-            HibernateDevelopersEntity developer1 = (HibernateDevelopersEntity) developer;
+            Developer developer1 = (Developer) developer;
 
             System.out.println(developer1.toString());
         }
@@ -55,7 +57,7 @@ public class DeveloperRunner {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
-        Developer developer = new Developer(firstname, lastname, speciality, experience, new Company(companyName));
+        Developer developer = new Developer(firstname, lastname, speciality, experience/*, new Company(companyName)*/);
         session.save(developer);
         transaction.commit();
         session.close();
@@ -66,10 +68,13 @@ public class DeveloperRunner {
         Transaction transaction = null;
         transaction = session.beginTransaction();
 
-        List developers = session.createQuery("from HibernateDevelopersEntity ").list();
-
+//        List developers = session.createQuery("from HibernateDevelopersEntity ").list();
+        NativeQuery queryParser = session.createSQLQuery("SELECT * FROM hibernate_developers");
+        queryParser.addEntity(Developer.class);
+        List developers = queryParser.list();
         transaction.commit();
         session.close();
+
       return developers;
     }
 
