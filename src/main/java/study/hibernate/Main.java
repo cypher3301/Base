@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import study.hibernate.data.HibernateDevelopersEntity;
 
@@ -34,7 +36,7 @@ public class Main {
     }
 
     public void run(){
-        criteria();
+        nativeSQL();
     }
 
     private void transaction(){
@@ -100,5 +102,18 @@ public class Main {
         CriteriaBuilder.In<String> in = criteriaBuilder.in(root.get("experience"));
         System.out.println(in.value("experience"));
         System.out.println();
+    }
+
+    private void nativeSQL(){
+        Session session = sessionFactory.openSession();
+        String sql = "SELECT * FROM hibernate_developers";
+        NativeQuery query = session.createNativeQuery(sql);
+        query.addEntity(Developer.class);
+        List developers = query.list();
+        developers.forEach(System.out::println);
+//        System.out.println("===============================");
+//        for (Object developer : developers) {
+//            System.out.println(developer.toString());
+//        }
     }
 }
