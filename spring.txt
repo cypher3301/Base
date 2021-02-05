@@ -1,0 +1,27 @@
+Spring Framework. Урок 1: Введение. Зачем изучать Spring
+Spring Framework. Урок 2: Первое приложение (IntelliJ Idea)
+Spring Framework. Урок 3 [НЕОБЯЗАТЕЛЬНЫЙ]: Первое приложение (Eclipse)
+Spring Framework. Урок 4: Инверсия управления. Inversion of Control (IoC)
+Spring Framework. Урок 5: Внедрение зависимостей. Dependency Injection (DI). Введение
+Spring Framework. Урок 6: Внедрение зависимостей. Dependency Injection (DI). Часть 2
+Spring Framework. Урок 7: Bean scope (Область видимости бинов)
+Spring Framework. Урок 8: Жизненный цикл бина (Bean Lifecycle). Init, Destroy и Factory методы
+Spring Framework. Урок 9: Аннотации. Введение
+Spring Framework. Урок 10: Аннотация @Autowired. Внедрение зависимостей (Dependency Injection)
+Spring Framework. Урок 11: Аннотация @Qualifier. Внедрение зависимостей (Dependency Injection)
+Spring Framework. Урок 12: Аннотации @Scope, @Value, @PostConstruct, @PreDestroy
+Spring Framework. Урок 13: Конфигурация с помощью Java кода
+Spring Framework. Урок 14: Spring MVC. Теория
+Spring Framework. Урок 15: Spring MVC. Первое приложение
+Spring Framework. Урок 16: Spring MVC. Конфигурация с помощью Java кода
+Spring Framework. Урок 17: Контроллеры. Аннотация @Controller
+Spring Framework. Урок 18: Протокол HTTP. Методы GET и POST
+Spring Framework. Урок 19: Параметры GET запроса. Аннотация @RequestParam
+Spring Framework. Урок 20: Модель. Передача данных от контроллера к представлению
+Spring Framework. Урок 21: CRUD, REST, Паттерн DAO (Data Access Object)
+Spring Framework. Урок 22: Аннотация @ModelAttribute. HTML Формы (Thymeleaf)
+Spring Framework. Урок 23: CRUD приложение. PATCH, DELETE запросы
+Spring Framework. Урок 24: Валидация форм. Аннотация @Valid
+Spring Framework. Урок 25: JDBC API. Базы данных
+Spring Framework. Урок 26: SQL инъекции. PreparedStatement. JDBC API
+Spring Framework. Урок 27: JdbcTemplate

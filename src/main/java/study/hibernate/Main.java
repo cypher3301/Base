@@ -116,4 +116,8 @@ public class Main {
 //            System.out.println(developer.toString());
 //        }
     }
+
+    private void cache(){
+        HibernateDevelopersEntity hibernateDevelopersEntity = new HibernateDevelopersEntity();
+    }
 }

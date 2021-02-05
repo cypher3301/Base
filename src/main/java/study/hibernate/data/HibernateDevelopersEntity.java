@@ -1,10 +1,14 @@
 package study.hibernate.data;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "hibernate_developers", schema = "simplenn_test")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class HibernateDevelopersEntity {
     private int id;
     private String firstName;

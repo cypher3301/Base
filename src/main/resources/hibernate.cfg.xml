@@ -4,37 +4,37 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        
+        <!--Main Settings-->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/simplenn_test</property>
         <property name="connection.username">usr</property>
         <property name="connection.password">pass</property>
+        <!--Main Settings-->
+        
+        <!--Cache Settings-->
+<!--        <property name="hibernate.cache.region_prefix">org.hibernate.cache.ehcache.internal.EhcacheRegionFactory</property>-->
+<!--        &lt;!&ndash; enable second level cache and query cache &ndash;&gt;-->
+<!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->
+<!--        <property name="hibernate.cache.use_query_cache">true</property>-->
+<!--        <property name="net.sf.ehcache.configurationResourceName">/cache/ehcache.xml</property>-->
+        <!--Cache Settings-->
 
-        <!--        <property name="connection.pool_size">1</property>-->
-<!--        <property name="hibernate.show_sql">true</property>-->
-<!--        <property name="connection.autocommit">true</property>-->
+
+        <!--        Other settings      -->
+        <property name="connection.pool_size">1</property>
+        <property name="hibernate.show_sql">true</property>
+        <!--        <property name="connection.autocommit">true</property>-->
+        <property name="hibernate.current_session_context_class">thread</property>
+        <!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
+        <!--        Other settings      -->
 
 
-<!--        <property name="hibernate.current_session_context_class">thread</property>-->
-        <!-- DB schema will be updated if needed -->
-<!--        <property name="hibernate.hbm2ddl.auto">update</property>-->
-
-
-<!--        <mapping class="study.hibernate.data.EmployEntity"/>-->
-<!--        <mapping resource="EmployEntity.hbm.xml"/>-->
-
-<!--        <mapping class="study.hibernate.data.EmploysEntity"/>-->
-<!--        <mapping resource="EmploysEntity.hbm.xml"/>-->
-
-<!--        <mapping class="study.hibernate.data.TestEntity"/>-->
-<!--        <mapping resource="TestEntity.hbm.xml"/>-->
-
-<!--        <mapping class="study.hibernate.data.TestphonesEntity"/>-->
-<!--        <mapping resource="TestphonesEntity.hbm.xml"/>-->
-
+        <!--        Mapping Entities        -->
         <mapping resource="HibernateDevelopersEntity.hbm.xml"/>
-
         <mapping resource="Debeloper.hbm.xml"/>
+        <!--        Mapping Entities        -->
 
 
     </session-factory>
